@@ -8,19 +8,6 @@
 
 import UIKit
 
-public struct SlidingContainerSliderViewAppearance {
-  public var backgroundColor: UIColor
-  public var font: UIFont
-  public var selectedFont: UIFont
-  public var textColor: UIColor
-  public var selectedTextColor: UIColor
-  public var outerPadding: CGFloat
-  public var innerPadding: CGFloat
-  public var selectorColor: UIColor
-  public var selectorHeight: CGFloat
-  public var fixedWidth: Bool
-}
-
 public protocol SlidingContainerSliderViewDelegate: class {
   func slidingContainerSliderViewDidPressed (_ slidingtContainerSliderView: SlidingContainerSliderView, atIndex: Int)
 }
