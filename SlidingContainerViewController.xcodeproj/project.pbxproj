@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8049CCA91F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8049CCA81F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift */; };
 		B2C64C831E8D386200E7B74F /* SlidingContainerSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C64C811E8D386200E7B74F /* SlidingContainerSliderView.swift */; };
 		B2C64C841E8D386200E7B74F /* SlidingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C64C821E8D386200E7B74F /* SlidingContainerViewController.swift */; };
 		B2F387D71AD7C5200092872C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F387D61AD7C5200092872C /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8049CCA81F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerSliderViewAppearance.swift; sourceTree = "<group>"; };
 		B2C64C811E8D386200E7B74F /* SlidingContainerSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerSliderView.swift; sourceTree = "<group>"; };
 		B2C64C821E8D386200E7B74F /* SlidingContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerViewController.swift; sourceTree = "<group>"; };
 		B2F387D11AD7C5200092872C /* SlidingContainerViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlidingContainerViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,7 @@
 			children = (
 				B2C64C811E8D386200E7B74F /* SlidingContainerSliderView.swift */,
 				B2C64C821E8D386200E7B74F /* SlidingContainerViewController.swift */,
+				8049CCA81F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				TargetAttributes = {
 					B2F387D01AD7C5200092872C = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = T28QJVP33J;
 						LastSwiftMigration = 0800;
 					};
 					B2F387E51AD7C5200092872C = {
@@ -235,6 +239,7 @@
 				B2F387D91AD7C5200092872C /* ViewController.swift in Sources */,
 				B2F387D71AD7C5200092872C /* AppDelegate.swift in Sources */,
 				B2C64C841E8D386200E7B74F /* SlidingContainerViewController.swift in Sources */,
+				8049CCA91F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift in Sources */,
 				B2F387FC1AD7CD740092872C /* DemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,6 +375,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = T28QJVP33J;
 				INFOPLIST_FILE = SlidingContainerViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -383,6 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = T28QJVP33J;
 				INFOPLIST_FILE = SlidingContainerViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
