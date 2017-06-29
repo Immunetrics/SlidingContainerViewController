@@ -23,6 +23,12 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
   public var sliderViewShown: Bool = true
   public weak var delegate: SlidingContainerViewControllerDelegate?
 
+  public var isContentScrollable: Bool = true {
+    didSet {
+      contentScrollView.isScrollEnabled = isContentScrollable
+    }
+  }
+  
   // MARK: Init
 
   public init (parent: UIViewController, contentViewControllers: [UIViewController], titles: [String]) {
