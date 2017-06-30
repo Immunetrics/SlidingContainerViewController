@@ -13,7 +13,7 @@ public protocol SlidingContainerSliderViewDelegate: class {
 }
 
 public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
-  public static let sliderHeight: CGFloat = 44
+  public static let sliderHeight: CGFloat = 48
   
   public var shouldSlide: Bool = true
   public var sliderHeight: CGFloat = SlidingContainerSliderView.sliderHeight
@@ -21,24 +21,28 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
   public var labels: [UILabel] = []
   public var selector: UIView!
   public weak var sliderDelegate: SlidingContainerSliderViewDelegate?
-
+  
   public var appearance: SlidingContainerSliderViewAppearance! {
     didSet {
       draw()
     }
   }
-
+  
   // MARK: Init
-
+  
   public init(width: CGFloat, titles: [String]) {
     super.init(frame: CGRect (x: 0, y: 0, width: width, height: sliderHeight))
     self.titles = titles
-
+    
     delegate = self
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
     scrollsToTop = false
-
+    
+    self.addGestureRecognizer(UITapGestureRecognizer (
+      target: self,
+      action: #selector(SlidingContainerSliderView.didTap(_:))))
+    
     appearance = SlidingContainerSliderViewAppearance (
       backgroundColor: UIColor(white: 0, alpha: 0.3),
       font: UIFont (name: "HelveticaNeue-Light", size: 15)!,
@@ -50,16 +54,16 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
       selectorColor: UIColor.red,
       selectorHeight: 5,
       fixedWidth: false)
-
+    
     draw()
   }
-
+  
   public required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)!
   }
-
+  
   // MARK: Draw
-
+  
   public func draw() {
     // clean
     if labels.count > 0 {
@@ -71,14 +75,15 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
         }
       }
     }
-
+    
     labels = []
     backgroundColor = appearance.backgroundColor
-
+    
     if appearance.fixedWidth {
+      
       var labelTag = 0
       let width = CGFloat(frame.size.width) / CGFloat(titles.count)
-
+      
       for title in titles {
         let label = labelWithTitle(title)
         label.frame.origin.x = (width * CGFloat(labelTag))
@@ -86,89 +91,107 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
         label.center.y = frame.size.height/2
         labelTag += 1
         label.tag = labelTag
-
+        
         addSubview(label)
         labels.append(label)
       }
-
+      
       let selectorH = appearance.selectorHeight
       selector = UIView (frame: CGRect (x: 0, y: frame.size.height - selectorH, width: width, height: selectorH))
       selector.backgroundColor = appearance.selectorColor
       addSubview(selector)
-
+      
       contentSize = CGSize (width: frame.size.width, height: frame.size.height)
     } else {
+      
       var labelTag = 0
       var currentX = appearance.outerPadding
-
+      
       for title in titles {
         let label = labelWithTitle(title)
         label.frame.origin.x = currentX
         label.center.y = frame.size.height/2
         labelTag += 1
         label.tag = labelTag
-
         addSubview(label)
         labels.append(label)
         currentX += label.frame.size.width + appearance.outerPadding
       }
-
+      
       let selectorH = appearance.selectorHeight
       selector = UIView (frame: CGRect (x: 0, y: frame.size.height - selectorH, width: 100, height: selectorH))
       selector.backgroundColor = appearance.selectorColor
       addSubview(selector)
-
+      
       contentSize = CGSize (width: currentX, height: frame.size.height)
     }
   }
-
+  
   public func labelWithTitle(_ title: String) -> UILabel {
-    let label = UILabel (frame: CGRect (x: 0, y: 0, width: 0, height: 0))
+    let label = UILabel (frame: .zero)
     label.text = title
     label.font = appearance.font
     label.textColor = appearance.textColor
     label.textAlignment = .center
     label.sizeToFit()
     label.frame.size.width += appearance.innerPadding * 2
-    label.addGestureRecognizer(UITapGestureRecognizer (
-      target: self,
-      action: #selector(SlidingContainerSliderView.didTap(_:))))
     label.isUserInteractionEnabled = true
     return label
   }
-
+  
   // MARK: Actions
-
+  
   public func didTap(_ tap: UITapGestureRecognizer) {
-    self.sliderDelegate?.slidingContainerSliderViewDidPressed(self, atIndex: tap.view!.tag - 1)
+    let view = tap.view
+    let loc = tap.location(in: view)
+    
+    let tags: [Int] = self.labels.reduce([]){ result, label in
+      
+      let frame = CGRect(x: label.frame.origin.x,
+                         y: 0,
+                         width: label.frame.width,
+                         height: SlidingContainerSliderView.sliderHeight)
+      
+      if frame.contains(loc){
+        return result + [label.tag]
+      }
+      return result
+    }
+    
+    if let tag = tags.first {
+      self.sliderDelegate?.slidingContainerSliderViewDidPressed(self, atIndex: tag - 1)
+    }
   }
-
+  
   // MARK: Menu
-
+  
   public func selectItemAtIndex(_ index: Int) {
     // Set Labels
     for i in 0..<self.labels.count {
       let label = labels[i]
-
+      
       if i == index {
-
+        
         label.textColor = appearance.selectedTextColor
         label.font = appearance.selectedFont
-
+        
         if !appearance.fixedWidth {
           label.sizeToFit()
           label.frame.size.width += appearance.innerPadding * 2
         }
-
+        
         // Set selector
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: {
           [unowned self] in
           self.selector.frame = CGRect (
             x: label.frame.origin.x,
             y: self.selector.frame.origin.y,
             width: label.frame.size.width,
             height: self.appearance.selectorHeight)
-        })
+          }, completion: nil)
+        
+        
+        
       } else {
         label.textColor = appearance.textColor
         label.font = appearance.font
