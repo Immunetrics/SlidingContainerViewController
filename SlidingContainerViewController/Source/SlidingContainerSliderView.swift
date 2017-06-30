@@ -56,6 +56,42 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
       fixedWidth: false)
     
     draw()
+    drawShadow()
+  }
+  
+  public func drawLine() {
+    let frame: CGRect = bounds
+    let layer: CAShapeLayer = CAShapeLayer()
+    
+    layer.lineWidth = 1
+    layer.strokeColor = UIColor(hex: 0xE0E0E0).cgColor
+    layer.fillColor = nil
+    
+    let start = CGPoint(x: 0, y: bounds.height + 0.5)
+    let end = CGPoint(x: frame.width, y: bounds.height + 0.5)
+    
+    let path = UIBezierPath()
+    path.move(to: start)
+    path.addLine(to: end)
+    layer.path = path.cgPath
+    layer.masksToBounds = false
+    self.layer.addSublayer(layer)
+    self.layer.masksToBounds = false
+    self.clipsToBounds = false
+  }
+  
+  public func drawShadow() {
+    let shadowOffset: CGSize = CGSize(width: 0, height: 4)
+    let shadowOpacity: Float = 0.1
+    let shadowRadius: CGFloat = 3.0
+    
+    layer.shadowRadius = shadowRadius
+    layer.shadowOpacity = shadowOpacity
+    layer.shadowOffset = shadowOffset
+    layer.masksToBounds = false
+    layer.shouldRasterize = true
+    layer.drawsAsynchronously = true
+    layer.rasterizationScale = UIScreen.main.scale
   }
   
   public required init(coder aDecoder: NSCoder) {
@@ -165,7 +201,7 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
   
   // MARK: Menu
   
-  public func selectItemAtIndex(_ index: Int) {
+  public func selectItemAtIndex(_ index: Int, animated: Bool = true) {
     // Set Labels
     for i in 0..<self.labels.count {
       let label = labels[i]
@@ -180,8 +216,11 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
           label.frame.size.width += appearance.innerPadding * 2
         }
         
+        let duration: TimeInterval = animated ? 0.5 : 0.0
+        
+        
         // Set selector
-        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: {
           [unowned self] in
           self.selector.frame = CGRect (
             x: label.frame.origin.x,
@@ -201,5 +240,20 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
         }
       }
     }
+  }
+}
+
+extension UIColor {
+  
+  convenience init(red: Int, green: Int, blue: Int) {
+    assert(red >= 0 && red <= 255, "Bad red component")
+    assert(green >= 0 && green <= 255, "Bad green component")
+    assert(blue >= 0 && blue <= 255, "Bad blue component")
+    
+    self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+  }
+  
+  convenience init(hex:Int) {
+    self.init(red:(hex >> 16) & 0xff, green:(hex >> 8) & 0xff, blue:hex & 0xff)
   }
 }

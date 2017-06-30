@@ -22,7 +22,7 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
   public var sliderView: SlidingContainerSliderView!
   public var sliderViewShown: Bool = true
   public weak var delegate: SlidingContainerViewControllerDelegate?
-
+  
   public var isContentScrollable: Bool = true {
     didSet {
       contentScrollView.isScrollEnabled = isContentScrollable
@@ -30,22 +30,22 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
   }
   
   // MARK: Init
-
+  
   public init (parent: UIViewController, contentViewControllers: [UIViewController], titles: [String]) {
     super.init(nibName: nil, bundle: nil)
     self.contentViewControllers = contentViewControllers
     self.titles = titles
-
+    
     // Move to parent
     willMove(toParentViewController: parent)
     parent.addChildViewController(self)
     didMove(toParentViewController: parent)
-
+    
     // Setup Views
     sliderView = SlidingContainerSliderView (width: view.frame.size.width, titles: titles)
     sliderView.frame.origin.y = parent.topLayoutGuide.length
     sliderView.sliderDelegate = self
-
+    
     contentScrollView = UIScrollView (frame: view.frame)
     contentScrollView.showsHorizontalScrollIndicator = false
     contentScrollView.showsVerticalScrollIndicator = false
@@ -53,10 +53,10 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
     contentScrollView.scrollsToTop = false
     contentScrollView.delegate = self
     contentScrollView.contentSize.width = contentScrollView.frame.size.width * CGFloat(contentViewControllers.count)
-
+    
     view.addSubview(contentScrollView)
     view.addSubview(sliderView)
-
+    
     // Add Child View Controllers
     var currentX: CGFloat = 0
     for vc in contentViewControllers {
@@ -66,30 +66,30 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
         width: view.frame.size.width,
         height: view.frame.size.height - parent.topLayoutGuide.length - parent.bottomLayoutGuide.length)
       contentScrollView.addSubview(vc.view)
-
+      
       currentX += contentScrollView.frame.size.width
     }
-
+    
     // Move First Item
     setCurrentViewControllerAtIndex(0)
   }
-
+  
   public required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)!
   }
-
+  
   // MARK: Lifecycle
-
+  
   public override func viewDidLoad() {
     super.viewDidLoad()
   }
-
+  
   // MARK: ChildViewController Management
-
-  public func setCurrentViewControllerAtIndex(_ index: Int) {
+  
+  public func setCurrentViewControllerAtIndex(_ index: Int, animated: Bool = true) {
     for i in 0..<self.contentViewControllers.count {
       let vc = contentViewControllers[i]
-
+      
       if i == index {
         vc.willMove(toParentViewController: self)
         addChildViewController(vc)
@@ -101,27 +101,27 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
         vc.didMove(toParentViewController: self)
       }
     }
-
-    sliderView.selectItemAtIndex(index)
+    
+    sliderView.selectItemAtIndex(index, animated: animated)
     contentScrollView.setContentOffset(
       CGPoint (x: contentScrollView.frame.size.width * CGFloat(index), y: 0),
-      animated: true)
-
+      animated: animated)
+    
     navigationController?.navigationItem.title = titles[index]
   }
-
+  
   // MARK: SlidingContainerSliderViewDelegate
-
+  
   public func slidingContainerSliderViewDidPressed(_ slidingContainerSliderView: SlidingContainerSliderView, atIndex: Int) {
     sliderView.shouldSlide = false
     setCurrentViewControllerAtIndex(atIndex)
   }
-
+  
   // MARK: SliderView
-
+  
   public func hideSlider() {
     guard !sliderViewShown else { return }
-
+    
     UIView.animate(
       withDuration: 0.3,
       animations: { [weak self] in
@@ -131,12 +131,12 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
         guard let this = self else { return }
         this.sliderViewShown = false
         this.delegate?.slidingContainerViewControllerDidHideSliderView(this)
-      })
+    })
   }
-
+  
   public func showSlider() {
     guard sliderViewShown else { return }
-
+    
     UIView.animate(
       withDuration: 0.3,
       animations: { [weak self] in
@@ -146,27 +146,27 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
         guard let this = self else { return }
         this.sliderViewShown = true
         this.delegate?.slidingContainerViewControllerDidShowSliderView(this)
-      })
+    })
   }
-
+  
   // MARK: UIScrollViewDelegate
-
+  
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.panGestureRecognizer.state == .began {
       sliderView.shouldSlide = true
     }
-
+    
     let contentW = contentScrollView.contentSize.width - contentScrollView.frame.size.width
     let sliderW = sliderView.contentSize.width - sliderView.frame.size.width
-
+    
     let current = contentScrollView.contentOffset.x
     let ratio = current / contentW
-
+    
     if sliderView.contentSize.width > sliderView.frame.size.width && sliderView.shouldSlide == true {
       sliderView.contentOffset = CGPoint (x: sliderW * ratio, y: 0)
     }
   }
-
+  
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     let index = scrollView.contentOffset.x / contentScrollView.frame.size.width
     setCurrentViewControllerAtIndex(Int(index))
