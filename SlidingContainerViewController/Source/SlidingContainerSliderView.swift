@@ -200,7 +200,7 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
         
         
         // Set selector
-        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.77, initialSpringVelocity: 0.0, options: .curveEaseInOut, animations: {
           [unowned self] in
           self.selector.frame = CGRect (
             x: label.frame.origin.x,
