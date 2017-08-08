@@ -15,7 +15,7 @@ public protocol SlidingContainerViewControllerDelegate: class {
   func slidingContainerViewControllerDidShowSliderView(_ slidingContainerViewController: SlidingContainerViewController)
 }
 
-public class SlidingContainerViewController: UIViewController, UIScrollViewDelegate, SlidingContainerSliderViewDelegate {
+open class SlidingContainerViewController: UIViewController, UIScrollViewDelegate, SlidingContainerSliderViewDelegate {
   public var contentViewControllers: [UIViewController]!
   public var contentScrollView: UIScrollView!
   public var titles: [String]!
@@ -80,7 +80,7 @@ public class SlidingContainerViewController: UIViewController, UIScrollViewDeleg
   
   // MARK: Lifecycle
   
-  public override func viewDidLoad() {
+  open override func viewDidLoad() {
     super.viewDidLoad()
   }
   
