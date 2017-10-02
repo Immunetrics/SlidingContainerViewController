@@ -177,7 +177,7 @@ public class SlidingContainerSliderView: UIScrollView, UIScrollViewDelegate {
   
   // MARK: Actions
   
-  public func didTap(_ tap: UITapGestureRecognizer) {
+  @objc public func didTap(_ tap: UITapGestureRecognizer) {
     let view = tap.view
     let loc = tap.location(in: view)
     
