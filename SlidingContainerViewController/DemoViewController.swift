@@ -14,7 +14,7 @@ class DemoViewController: UIViewController, SlidingContainerViewControllerDelega
     super.viewDidLoad()
     navigationItem.title = "Demo"
     navigationController?.navigationBar.titleTextAttributes = [
-      NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 20)!
+      NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Light", size: 20)!
     ]
   }
 
