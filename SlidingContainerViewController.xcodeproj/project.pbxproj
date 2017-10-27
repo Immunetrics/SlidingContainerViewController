@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		803D49FA1FA3939F00461D8B /* SlidingContainerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D49F91FA3939F00461D8B /* SlidingContainerPage.swift */; };
 		8049CCA91F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8049CCA81F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift */; };
 		B2C64C831E8D386200E7B74F /* SlidingContainerSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C64C811E8D386200E7B74F /* SlidingContainerSliderView.swift */; };
 		B2C64C841E8D386200E7B74F /* SlidingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C64C821E8D386200E7B74F /* SlidingContainerViewController.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		803D49F91FA3939F00461D8B /* SlidingContainerPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingContainerPage.swift; sourceTree = "<group>"; };
 		8049CCA81F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerSliderViewAppearance.swift; sourceTree = "<group>"; };
 		B2C64C811E8D386200E7B74F /* SlidingContainerSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerSliderView.swift; sourceTree = "<group>"; };
 		B2C64C821E8D386200E7B74F /* SlidingContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				B2C64C811E8D386200E7B74F /* SlidingContainerSliderView.swift */,
 				B2C64C821E8D386200E7B74F /* SlidingContainerViewController.swift */,
 				8049CCA81F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift */,
+				803D49F91FA3939F00461D8B /* SlidingContainerPage.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				B2F387D71AD7C5200092872C /* AppDelegate.swift in Sources */,
 				B2C64C841E8D386200E7B74F /* SlidingContainerViewController.swift in Sources */,
 				8049CCA91F0186E9002EA502 /* SlidingContainerSliderViewAppearance.swift in Sources */,
+				803D49FA1FA3939F00461D8B /* SlidingContainerPage.swift in Sources */,
 				B2F387FC1AD7CD740092872C /* DemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
